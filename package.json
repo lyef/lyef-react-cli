@@ -1,0 +1,32 @@
+{
+  "name": "lyef-react-cli",
+  "version": "0.0.1",
+  "description": "Command line tool for building decoupled and independent react componetns",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "engines": {
+    "node": ">= 0.10.26",
+    "npm": ">=1.4.3"
+  },
+  "author": "lyef",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lyef/lyef-react-cli.git"
+  },
+  "keywords": [
+    "cli",
+    "react",
+    "command",
+    "terminal"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/lyef/lyef-react-cli/issues"
+  },
+  "homepage": "https://github.com/lyef/lyef-react-cli",
+  "dependencies": {
+    "commander": "^2.9.0"
+  }
+}
