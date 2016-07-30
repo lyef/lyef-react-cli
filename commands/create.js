@@ -5,7 +5,10 @@ module.exports = create;
 
 function create (name) {
     const stream = clone(name);
-    stream.on('close', () => clean(name));
+    stream.on('close', () => {
+        clean(name);
+        update(name);
+    });
 }
 
 function clone (name) {
@@ -20,3 +23,16 @@ function clean (name) {
    return stdout;
 }
 
+function update (name) {
+    const filename = `${process.cwd()}/${name}/package.json`;
+    fs.readFile(filename, (error, content) => {
+        if (error) throw error;
+
+        let pkg = JSON.parse(content);
+        pkg.name = name;
+
+        fs.writeFile(filename, JSON.stringify(pkg, null, 4), 'utf8', (error) => {
+            if (error) throw error;
+        });
+    });
+}
