@@ -27,6 +27,13 @@
   },
   "homepage": "https://github.com/lyef/lyef-react-cli",
   "dependencies": {
-    "commander": "^2.9.0"
+    "commander": "^2.9.0",
+    "glob-stream": "^5.3.2",
+    "humanize-component": "^0.1.0",
+    "lodash.camelcase": "^4.3.0",
+    "lodash.kebabcase": "^4.1.1",
+    "lodash.template": "^4.3.0",
+    "through2-map": "^2.0.0",
+    "through2-reduce": "^1.1.1"
   }
 }
