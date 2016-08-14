@@ -17,8 +17,7 @@ module.exports = (info) => {
     		highWaterMark: 16
     	},
     	chunk => {
-    		return fs.createReadStream(chunk.path)
-    			.pipe(createTemplateStream(info))
-                .pipe(map(file => console.log(file.toString())));
+    		const stream = fs.createReadStream(chunk.path)
+    			.pipe(createTemplateStream(info));
     	});
 };

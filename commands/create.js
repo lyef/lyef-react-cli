@@ -1,4 +1,5 @@
 const spawn = require('child_process').spawn;
+const ora = require('ora');
 const gs = require('glob-stream');
 const templateTransformer = require('../helpers/templateTransformer');
 const Readable = require('stream').Readable;
@@ -31,21 +32,26 @@ function create (name, author, description, version) {
 
 function clone (name) {
     const stream = spawn('git', ['clone', 'https://github.com/lyef/lyef-react-template', `${process.cwd()}/${name}`]).stdout;
-    console.log('[get template] Cloning template repository...')
-    stream.on('end', () => console.log('[get template] done'))
+    const spinner = ora('Cloning template from github').start();
+    stream.on('finish', spinner.succeed.bind(spinner));
+    stream.on('error', spinner.fail.bind(spinner));
     return stream;
 }
 
 function processTemplate (info) {
-    const stream = gs.create(`./${info.name}/**/*.*`);
-    stream
+    let stream = gs.create(`./${info.name}/**/*.*`);
+    const spinner = ora('Processing templates').start();
+    stream = stream
 		.pipe(templateTransformer(info));
+    stream.on('finish', spinner.succeed.bind(spinner));
+    stream.on('error', spinner.fail.bind(spinner))
 }
 
 function clean (name) {
-   const stream = spawn('rm', ['-vr', `${process.cwd()}/${name}/.git`]).stdout;
-   console.log('[remove .git] Removing .git from template...')
-   stream.on('end', () => console.log('[remove .git] done'));
-   return stream;
+    const stream = spawn('rm', ['-vr', `${process.cwd()}/${name}/.git`]).stdout;
+    const spinner = ora('Cleaning uncessary files from template').start();
+    stream.on('finish', spinner.succeed.bind(spinner));
+    stream.on('error', spinner.fail.bind(spinner));
+    return stream;
 }
 
