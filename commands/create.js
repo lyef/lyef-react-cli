@@ -31,7 +31,7 @@ function create (name, author, description, version) {
 
 function clone (name) {
     const stream = spawn('git', ['clone', 'https://github.com/lyef/lyef-react-template', `${process.cwd()}/${name}`]).stdout;
-    console.log('[get template] Cloning tempalte repository...')
+    console.log('[get template] Cloning template repository...')
     stream.on('end', () => console.log('[get template] done'))
     return stream;
 }
@@ -44,7 +44,7 @@ function processTemplate (info) {
 
 function clean (name) {
    const stream = spawn('rm', ['-vr', `${process.cwd()}/${name}/.git`]).stdout;
-   console.log('[remove .git] Removing .git from tempalte...')
+   console.log('[remove .git] Removing .git from template...')
    stream.on('end', () => console.log('[remove .git] done'));
    return stream;
 }
