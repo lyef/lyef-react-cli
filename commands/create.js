@@ -23,11 +23,10 @@ function parseInfo (name, author, description, version) {
 
 function create (name, author, description, version) {
 	const info = parseInfo(name, author, description, version);
-    const stream = clone(name);
-    stream.on('close', () => {
-        clean(name);
-        processTemplate(info);
-    });
+    clone(name)
+        .then(() => createTmp(name))
+        .then(() => processTemplate(info))
+        .then(clean);
 }
 
 function clone (name) {
@@ -35,23 +34,43 @@ function clone (name) {
     const spinner = ora('Cloning template from github').start();
     stream.on('finish', spinner.succeed.bind(spinner));
     stream.on('error', spinner.fail.bind(spinner));
-    return stream;
+    return new Promise((resolve, reject) => {
+        stream.on('finish', resolve);
+        stream.on('error', reject);
+    });
 }
 
 function processTemplate (info) {
-    let stream = gs.create(`./${info.name}/**/*.*`);
+    const stream = gs.create(['.tmp/**/*.*', '!.tmp/.git/**/*'])
+        .pipe(templateTransformer(info));
     const spinner = ora('Processing templates').start();
-    stream = stream
-		.pipe(templateTransformer(info));
     stream.on('finish', spinner.succeed.bind(spinner));
     stream.on('error', spinner.fail.bind(spinner))
+    return new Promise((resolve, reject) => {
+        stream.on('finish', resolve);
+        stream.on('error', reject);
+    });
 }
 
-function clean (name) {
-    const stream = spawn('rm', ['-vr', `${process.cwd()}/${name}/.git`]).stdout;
-    const spinner = ora('Cleaning uncessary files from template').start();
+function createTmp (name) {
+    const stream = spawn('cp', ['-r', `${process.cwd()}/${name}`, `${process.cwd()}/.tmp`]).stdout;
+    const spinner = ora('Creating .tmp').start();;
+    stream.on('finish', spinner.succeed.bind(spinner));
+    stream.on('error', spinner.fail.bind(spinner))
+    return new Promise((resolve, reject) => {
+        stream.on('finish', resolve);
+        stream.on('error', reject);
+    });
+}
+
+function clean () {
+    const stream = spawn('rm', ['-vr', `${process.cwd()}/.tmp`]).stdout;
+    const spinner = ora('Removing .tmp').start();
     stream.on('finish', spinner.succeed.bind(spinner));
     stream.on('error', spinner.fail.bind(spinner));
-    return stream;
+    return new Promise((resolve, reject) => {
+        stream.on('finish', resolve);
+        stream.on('error', reject);
+    });
 }
 

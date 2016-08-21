@@ -12,12 +12,9 @@ function createTemplateStream (info) {
 }
 
 module.exports = (info) => {
-    return map({
-    		objectMode: true,
-    		highWaterMark: 16
-    	},
-    	chunk => {
-    		const stream = fs.createReadStream(chunk.path)
-    			.pipe(createTemplateStream(info));
-    	});
+    return map({objectMode: true}, chunk => {
+        return fs.createReadStream(chunk.path)
+            .pipe(createTemplateStream(info))
+            .pipe(fs.createWriteStream(chunk.path.replace('.tmp/', `${info.name}/`)));
+    });
 };
