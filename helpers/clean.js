@@ -1,17 +1,19 @@
 const spawn = require('child_process').spawn;
 const ora = require('ora');
+const promisefyStream = require('./promisefyStream');
 
 module.exports = clean;
 
-function clean () {
-    const stream = spawn('rm', ['-vr', `${process.cwd()}/.tmp`]).stdout;
+function clean (name) {
+    const folders = [
+        `${process.cwd()}/.tmp`,
+        `${process.cwd()}/${name}/.git`
+    ];
+    const stream = spawn('rm', ['-vr', ...folders]).stdout;
 
-    const spinner = ora('Removing .tmp').start();
-    stream.on('finish', spinner.succeed.bind(spinner));
-    stream.on('error', spinner.fail.bind(spinner));
+    const spinner = ora('Removing unecessary folders').start();
 
-    return new Promise((resolve, reject) => {
-        stream.on('finish', resolve);
-        stream.on('error', reject);
-    });
+    return promisefyStream(stream)
+        .then(spinner.succeed.bind(spinner))
+        .catch(spinner.fail.bind(spinner));
 }

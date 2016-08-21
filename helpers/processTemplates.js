@@ -4,6 +4,7 @@ const _template = require('lodash.template');
 const reduce = require('through2-reduce');
 const map = require('through2-map');
 const ora = require('ora');
+const promisefyStream = require('./promisefyStream');
 
 module.exports = processTemplates;
 
@@ -22,11 +23,8 @@ function processTemplates (info) {
         .pipe(map({objectMode: true}, chunk => createTemplateStream(chunk.path, info)));
 
     const spinner = ora('Processing templates').start();
-    stream.on('finish', spinner.succeed.bind(spinner));
-    stream.on('error', spinner.fail.bind(spinner));
 
-    return new Promise((resolve, reject) => {
-        stream.on('finish', resolve);
-        stream.on('error', reject);
-    });
+    return promisefyStream(stream)
+        .then(spinner.succeed.bind(spinner))
+        .catch(spinner.fail.bind(spinner));
 };

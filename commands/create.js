@@ -11,5 +11,5 @@ function create (name, author, description, version) {
     clone(name)
         .then(() => createTmp(name))
         .then(() => processTemplates(info))
-        .then(clean);
+        .then(() => clean(name));
 }
