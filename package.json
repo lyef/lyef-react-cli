@@ -15,7 +15,7 @@
     "url": "git+https://github.com/lyef/lyef-react-cli.git"
   },
   "files": [
-   "index.js"
+    "index.js"
   ],
   "bin": {
     "lyef-react": "./index.js"
@@ -41,5 +41,9 @@
     "ora": "^0.3.0",
     "through2-map": "^2.0.0",
     "through2-reduce": "^1.1.1"
+  },
+  "devDependencies": {
+    "ava": "^0.17.0",
+    "sinon": "^1.17.6"
   }
 }
