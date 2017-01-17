@@ -7,7 +7,7 @@ module.exports = createTmp;
 function createTmp (name) {
     const stream = spawn('cp', ['-r', `${process.cwd()}/${name}`, `${process.cwd()}/.tmp`]).stdout;
 
-    const spinner = ora('Creating .tmp').start();;
+    const spinner = ora('Creating .tmp').start();
 
     return promisefyStream(stream)
         .then(spinner.succeed.bind(spinner))
