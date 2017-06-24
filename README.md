@@ -1,6 +1,6 @@
 # Lyef React Cli [![NPM version](https://badge-me.herokuapp.com/api/npm/lyef-react-cli.png)](http://badges.enytc.com/for/npm/lyef-react-cli)
 
-> A terminal CLI to create isolated and decoupled react componentes with es6. To understand more about the structure and philosophy, please take a look at the [generated structure here](https://github.com/lyef/lyef-react-component/).
+> A terminal CLI to create isolated and decoupled react componentes with es6. To understand more about the structure and philosophy, please take a look to the [generated structure here](https://github.com/lyef/lyef-react-component/).
 
 ## Getting Started
 
@@ -15,7 +15,12 @@ $ npm install -g lyef-react-cli
 Run the create command:
 
 ```bash
+
+# passing the attributes directly
 $ lyef-react create my-component-name authorname "Some description about it" 0.0.1
+
+# passing just the name
+$ lyef-react create my-component-name
 ```
 
 ## Contributing

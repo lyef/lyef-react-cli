@@ -1,10 +1,7 @@
 {
   "name": "lyef-react-cli",
   "version": "0.0.1",
-  "description": "Command line tool for building decoupled and independent react componetns",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+  "description": "Command line tool for building decoupled and independent react components based on Lyef React Component.",
   "engines": {
     "node": ">= 0.10.26",
     "npm": ">=1.4.3"
