@@ -6,7 +6,7 @@ const processTemplates = require('../helpers/processTemplates');
 
 module.exports = create;
 
-function create (name, author, description, version) {
+function create (name = 'my-component', author = 'my-name', description = 'My description.', version = '0.0.1') {
 	const info = parseInfo(name, author, description, version);
     clone(name)
         .then(() => createTmp(name))
