@@ -4,7 +4,7 @@ const program = require('commander');
 
 const create = require('./commands/create');
 
-program.version('0.0.1');
+program.version('1.0.1');
 
 program
     .command('create <name> [author] [description] [version]')

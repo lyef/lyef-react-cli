@@ -1,6 +1,6 @@
 {
   "name": "lyef-react-cli",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Command line tool for building decoupled and independent react components based on Lyef React Component.",
   "engines": {
     "node": ">= 0.10.26",
@@ -11,9 +11,6 @@
     "type": "git",
     "url": "git+https://github.com/lyef/lyef-react-cli.git"
   },
-  "files": [
-    "index.js"
-  ],
   "bin": {
     "lyef-react": "./index.js"
   },
